@@ -67,10 +67,23 @@ you get the result on 192.168.0.180 (speed, accelarete, compass, temperature)
 
 response:
 {
-    "speed":7.4660210609436,
-    "accelarete":5.016779184341431,
-    "compass":93.3273561000824,
-    "temperature":23.87215495109558,
+'variables': 
+    {
+    'speed': 0, 
+    'lights': 1, 
+    'direction': 1, 
+    'Ax': -0.69, 
+    'Ay': 0.59, 
+    'Az': -0.11, 
+    'T': 28.01, 
+    'Gx': -2.77, 
+    'Gy': -1.4, 
+    'Gz': -0.22}, 
+    'id': '1', 
+    'name': 'Nokia Garage Lab', 
+    'hardware': 'esp8266', 
+    'connected': True
+    }
 }
 
 Buzzercontrol:
