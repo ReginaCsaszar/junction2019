@@ -1,0 +1,28 @@
+import requests
+import json
+
+START = "http://192.168.0.180/motor?params=800"
+STOP = "http://192.168.0.180/motor?params=0"
+sensors = ["21", "31", "13", "11", "26", "33"]
+
+i=0;
+start_train = requests.get(START)
+while i<10000:
+    sensor_data_json = requests.get('http://192.168.0.100:5000/rest/items')
+    sensor_data = json.loads(sensor_data_json.text)
+
+    for sensor_id in sensors:
+        if sensor_data["track"]["rail_sections"][sensor_id]["state"] == 0:
+            print(sensor_id)
+            if sensor_id == "33":
+                sensors = ["21", "31", "13", "11", "26"]
+                print(sensors)
+            else:
+                sensors.remove(sensor_id)
+                stop_train = requests.get(STOP)
+                start_sign = input(">")
+                start_train = requests.get(START)
+                if "33" not in sensors:
+                    sensors.append("33")
+                print(sensors)
+            break
