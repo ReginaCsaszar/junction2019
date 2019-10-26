@@ -1,0 +1,9 @@
+import requests
+
+i=0;
+while i<800:
+    d = input(">")
+    x = requests.get("http://192.168.0.180/motor?params=1000")
+    d = input(">")
+    x = requests.get("http://192.168.0.180/motor?params=0")
+    i = i+1
