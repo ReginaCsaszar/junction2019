@@ -1,9 +1,10 @@
 import requests
 
-i=0;
-while i<800:
-    d = input(">")
-    x = requests.get("http://192.168.0.180/motor?params=1000")
-    d = input(">")
-    x = requests.get("http://192.168.0.180/motor?params=0")
-    i = i+1
+accelerate = True
+while true:
+    key = input(">")
+    if key == "q":
+        break
+    key = 1000 if accelerate else 0
+    accelerate = not accelerate
+    response = requests.get("http://192.168.0.180/motor?params=" + key)
