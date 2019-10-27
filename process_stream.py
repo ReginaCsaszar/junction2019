@@ -1,8 +1,8 @@
 import cv2
 import numpy as np
 
-#video_uri = '/mnt/c/data/jx/vonat22.mp4'
-video_uri = 'http://192.168.0.190:8080/stream/video.mjpeg'
+video_uri = '/mnt/c/data/jx/vonat22.mp4'
+#video_uri = 'http://192.168.0.190:8080/stream/video.mjpeg'
 
 mask = [[0.45, 0.65],[0.50,0.65],[0.6,0.95],[0.35,0.95]]
 
@@ -46,7 +46,13 @@ if __name__ == '__main__':
         frame_threshold = cv2.inRange(frameHSV, np.array([0,80,0]), np.array([255,220,255]))
         frame_threshold = cv2.erode(frame_threshold, np.array([5,5]))
         frame_threshold = cv2.dilate(frame_threshold, np.array([5,5]))
+        maskImage = np.zeros(shape=[frame_threshold.shape[0], frame_threshold.shape[1]], dtype=np.uint8)
+        intMask=np.array(list((int(x*frame.shape[1]),int(y*frame.shape[0])) for (x,y) in mask))
+        cv2.fillPoly(maskImage,  np.int32([intMask])  ,(255,255,255))
+        masked = np.bitwise_and(frame_threshold, maskImage)
         cv2.imshow('filtered',frame_threshold)
+        cv2.imshow('masked', masked)
+        print(np.sum(masked)//255)
         for i in range(-1,3,1):
             cv2.line(frame,
                 (int(mask[i][0]*frame.shape[1]),int(mask[i][1]*frame.shape[0])),
